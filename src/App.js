@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { classToPlain, plainToClass } from 'class-transformer';
 
 const StateIsNumber = () => {
   const [number, setNumber] = useState(0);
@@ -112,11 +113,14 @@ const StateIsClassInstance3 = () => {
 };
 
 const StateIsClassInstance4 = () => {
-  const [counter, setCounter] = useState(new Counter());
+  const _counter = new Counter();
+  _counter.counter = new Counter();
+  const [counter, setCounter] = useState(_counter);
   const increment = () => {
     setCounter((previousCounter) => {
-      const _previousCounter = { ...previousCounter };
-      _previousCounter.count = _previousCounter.count + 1;
+      let serializedPreviousCounter = classToPlain(previousCounter);
+      let _previousCounter = plainToClass(Counter, serializedPreviousCounter);
+      _previousCounter.counter.count = _previousCounter.counter.count + 1;
       return _previousCounter;
     });
   };
@@ -124,7 +128,7 @@ const StateIsClassInstance4 = () => {
   return (
     <div>
       <button onClick={increment}>更新する</button>
-      count: {counter.count}
+      count: {counter.counter.count}
     </div>
   );
 };
