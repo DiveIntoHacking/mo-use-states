@@ -79,13 +79,11 @@ const StateIsClassInstance2 = () => {
   const [counter, setCounter] = useState(new Counter());
   const increment = () => {
     setCounter((previousCounter) => {
-      previousCounter.count = previousCounter.count + 1;
-
       const _previousCounter = Object.assign(
         Object.create(Object.getPrototypeOf(previousCounter)),
         previousCounter
       );
-
+      _previousCounter.count = _previousCounter.count + 1;
       return _previousCounter;
     });
   };
