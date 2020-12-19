@@ -243,7 +243,10 @@ const StateIsClassInstance7 = ({ id }) => {
   const [counter, setCounter] = useState(_counter);
   const increment = () => {
     setCounter((previousCounter) => {
-      let _previousCounter = _.cloneDeep(previousCounter);
+      const _previousCounter = Object.assign(
+        Object.create(Object.getPrototypeOf(previousCounter)),
+        previousCounter
+      );
       _previousCounter.counter.count = _previousCounter.counter.count + 1;
       return _previousCounter;
     });
@@ -252,13 +255,40 @@ const StateIsClassInstance7 = ({ id }) => {
   return (
     <tr>
       <td>{id}</td>
-      <td>クラスのインスタンス(ネスト版) - lodashによるdeep clone</td>
+      <td>クラスのインスタンス(ネスト版) - Object.assignによるdeep clone</td>
       <td>0</td>
       <td>
         <button onClick={increment}>更新する</button>
       </td>
       <td>{counter.counter.count}</td>
-      <td>{updatableAndReRenderable}</td>
+      <td>カウンタの上がり方が変</td>
+    </tr>
+  );
+};
+
+const StateIsClassInstance8 = ({ id }) => {
+  const _counter = new Counter();
+  _counter.counter = new Counter();
+  const [counter, setCounter] = useState(_counter);
+  const increment = () => {
+    setCounter((previousCounter) => {
+      const _previousCounter = $.extend(true, {}, previousCounter);
+
+      _previousCounter.counter.count = _previousCounter.counter.count + 1;
+      return _previousCounter;
+    });
+  };
+
+  return (
+    <tr>
+      <td>{id}</td>
+      <td>クラスのインスタンス(ネスト版) - jQueryによるdeep clone</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{counter.counter.count}</td>
+      <td></td>
     </tr>
   );
 };
@@ -288,6 +318,7 @@ const App = () => {
         <StateIsClassInstance5 id={8} />
         <StateIsClassInstance6 id={9} />
         <StateIsClassInstance7 id={10} />
+        <StateIsClassInstance8 id={11} />
       </tbody>
     </table>
   );
