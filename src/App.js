@@ -1,20 +1,65 @@
 import React, { useState } from 'react';
 
-function StateIsNumber() {
-  const [count, setCount] = useState(0);
+const StateIsNumber = () => {
+  const [number, setNumber] = useState(0);
   const increment = () => {
-    setCount((previousCount) => previousCount + 1);
+    setNumber((previousCount) => previousCount + 1);
   };
 
   return (
     <div>
-      count: {count} <button onClick={increment}>click me</button>
+      <button onClick={increment}>更新する</button>
+      number: {number}
     </div>
   );
-}
+};
+
+/* 状態は更新されるものの、 re-renderされないので、期待の動きとはならない。 */
+const StateIsArray = () => {
+  const [array, setArray] = useState([1, 2, 3]);
+  const push = () => {
+    setArray((previousArray) => {
+      const item = previousArray[previousArray.length - 1] + 1;
+      previousArray.push(item);
+      console.log(previousArray);
+      return previousArray;
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={push}>更新する</button>
+      array: {array}
+    </div>
+  );
+};
+
+const StateIsArray2 = () => {
+  const [array, setArray] = useState([1, 2, 3]);
+  const push = () => {
+    setArray((previousArray) => {
+      const item = previousArray[previousArray.length - 1] + 1;
+      previousArray.push(item);
+      return [...previousArray];
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={push}>更新する</button>
+      array: {array}
+    </div>
+  );
+};
 
 const App = () => {
-  return <StateIsNumber />;
+  return (
+    <>
+      <StateIsNumber />
+      <StateIsArray />
+      <StateIsArray2 />
+    </>
+  );
 };
 
 export default App;
