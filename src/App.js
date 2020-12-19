@@ -8,7 +8,7 @@ const updatableAndReRenderable = '更新された値がre-renderされる。';
 const updatableButUnReRenderable =
   '更新はされるが、更新後の値がre-renderされない。';
 
-const StateIsNumber = () => {
+const StateIsNumber = ({ id }) => {
   const [number, setNumber] = useState(0);
   const increment = () => {
     setNumber((previousCount) => previousCount + 1);
@@ -16,7 +16,7 @@ const StateIsNumber = () => {
 
   return (
     <tr>
-      <td>1</td>
+      <td>{id}</td>
       <td>数値</td>
       <td>0</td>
       <td>
@@ -28,7 +28,7 @@ const StateIsNumber = () => {
   );
 };
 
-const StateIsArray = () => {
+const StateIsArray = ({ id }) => {
   const [array, setArray] = useState([1, 2, 3]);
   const push = () => {
     setArray((previousArray) => {
@@ -41,7 +41,7 @@ const StateIsArray = () => {
 
   return (
     <tr>
-      <td>2</td>
+      <td>{id}</td>
       <td>配列 - その1</td>
       <td>[{[1, 2, 3].toString()}]</td>
       <td>
@@ -53,7 +53,7 @@ const StateIsArray = () => {
   );
 };
 
-const StateIsArray2 = () => {
+const StateIsArray2 = ({ id }) => {
   const [array, setArray] = useState([1, 2, 3]);
   const push = () => {
     setArray((previousArray) => {
@@ -64,7 +64,7 @@ const StateIsArray2 = () => {
 
   return (
     <tr>
-      <td>3</td>
+      <td>{id}</td>
       <td>配列 - その2</td>
       <td>[{[1, 2, 3].toString()}]</td>
       <td>
@@ -82,7 +82,7 @@ class Counter {
   }
 }
 
-const StateIsClassInstance = () => {
+const StateIsClassInstance = ({ id }) => {
   const [counter, setCounter] = useState(new Counter());
   const increment = () => {
     setCounter((previousCounter) => {
@@ -94,8 +94,8 @@ const StateIsClassInstance = () => {
 
   return (
     <tr>
-      <td>4</td>
-      <td>クラスのインスタンス - その1</td>
+      <td>{id}</td>
+      <td>クラスのインスタンス </td>
       <td>0</td>
       <td>
         <button onClick={increment}>更新する</button>
@@ -106,7 +106,7 @@ const StateIsClassInstance = () => {
   );
 };
 
-const StateIsClassInstance2 = () => {
+const StateIsClassInstance2 = ({ id }) => {
   const [counter, setCounter] = useState(new Counter());
   const increment = () => {
     setCounter((previousCounter) => {
@@ -117,14 +117,20 @@ const StateIsClassInstance2 = () => {
   };
 
   return (
-    <div>
-      <button onClick={increment}>更新する</button>
-      count: {counter.count}
-    </div>
+    <tr>
+      <td>{id}</td>
+      <td>クラスのインスタンス - Object.assignでshallow cloneをする版</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{counter.count}</td>
+      <td>{updatableAndReRenderable}</td>
+    </tr>
   );
 };
 
-const StateIsClassInstance3 = () => {
+const StateIsClassInstance3 = ({ id }) => {
   const [counter, setCounter] = useState(new Counter());
   const increment = () => {
     setCounter((previousCounter) => {
@@ -135,14 +141,20 @@ const StateIsClassInstance3 = () => {
   };
 
   return (
-    <div>
-      <button onClick={increment}>更新する</button>
-      count: {counter.count}
-    </div>
+    <tr>
+      <td>{id}</td>
+      <td>クラスのインスタンス - spread演算子でshallow cloneをする版</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{counter.count}</td>
+      <td>{updatableAndReRenderable}</td>
+    </tr>
   );
 };
 
-const StateIsClassInstance4 = () => {
+const StateIsClassInstance4 = ({ id }) => {
   const _counter = new Counter();
   _counter.counter = new Counter();
   const [counter, setCounter] = useState(_counter);
@@ -156,10 +168,16 @@ const StateIsClassInstance4 = () => {
   };
 
   return (
-    <div>
-      <button onClick={increment}>更新する</button>
-      count: {counter.counter.count}
-    </div>
+    <tr>
+      <td>{id}</td>
+      <td>クラスのインスタンス(ネスト版)</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{counter.counter.count}</td>
+      <td>{updatableAndReRenderable}</td>
+    </tr>
   );
 };
 
@@ -175,13 +193,13 @@ const App = () => {
         <th scope="col">更新後の値</th>
         <th scope="col">結果</th>
       </tr>
-      <StateIsNumber />
-      <StateIsArray />
-      <StateIsArray2 />
-      <StateIsClassInstance />
-      <StateIsClassInstance2 />
-      <StateIsClassInstance3 />
-      <StateIsClassInstance4 />
+      <StateIsNumber id={1} />
+      <StateIsArray id={2} />
+      <StateIsArray2 id={3} />
+      <StateIsClassInstance id={4} />
+      <StateIsClassInstance2 id={5} />
+      <StateIsClassInstance3 id={6} />
+      <StateIsClassInstance4 id={7} />
     </table>
   );
 };
