@@ -111,6 +111,24 @@ const StateIsClassInstance3 = () => {
   );
 };
 
+const StateIsClassInstance4 = () => {
+  const [counter, setCounter] = useState(new Counter());
+  const increment = () => {
+    setCounter((previousCounter) => {
+      const _previousCounter = { ...previousCounter };
+      _previousCounter.count = _previousCounter.count + 1;
+      return _previousCounter;
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={increment}>更新する</button>
+      count: {counter.count}
+    </div>
+  );
+};
+
 const App = () => {
   return (
     <>
@@ -120,6 +138,7 @@ const App = () => {
       <StateIsClassInstance />
       <StateIsClassInstance2 />
       <StateIsClassInstance3 />
+      <StateIsClassInstance4 />
     </>
   );
 };
