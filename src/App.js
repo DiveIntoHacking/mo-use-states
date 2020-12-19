@@ -3,6 +3,11 @@ import { classToPlain, plainToClass } from 'class-transformer';
 
 import './App.css';
 
+const updatableAndReRenderable = '更新された値がre-renderされる。';
+
+const updatableButUnReRenderable =
+  '更新はされるが、更新後の値がre-renderされない。';
+
 const StateIsNumber = () => {
   const [number, setNumber] = useState(0);
   const increment = () => {
@@ -18,7 +23,7 @@ const StateIsNumber = () => {
         <button onClick={increment}>更新する</button>
       </td>
       <td>{number}</td>
-      <td>更新された値がre-renderされる。</td>
+      <td>{updatableAndReRenderable}</td>
     </tr>
   );
 };
@@ -43,7 +48,7 @@ const StateIsArray = () => {
         <button onClick={push}>更新する</button>
       </td>
       <td>[{array.toString()}]</td>
-      <td>更新はされるが、更新後の値がre-renderされない。</td>
+      <td>{updatableButUnReRenderable}</td>
     </tr>
   );
 };
@@ -66,7 +71,7 @@ const StateIsArray2 = () => {
         <button onClick={push}>更新する</button>
       </td>
       <td>[{array.toString()}]</td>
-      <td>更新された値がre-renderされる。</td>
+      <td>{updatableAndReRenderable}</td>
     </tr>
   );
 };
@@ -88,10 +93,16 @@ const StateIsClassInstance = () => {
   };
 
   return (
-    <div>
-      <button onClick={increment}>更新する</button>
-      count: {counter.count}
-    </div>
+    <tr>
+      <td>4</td>
+      <td>クラスのインスタンス - その1</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{counter.count}</td>
+      <td>{updatableButUnReRenderable}</td>
+    </tr>
   );
 };
 
