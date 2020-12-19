@@ -39,8 +39,7 @@ const StateIsArray2 = () => {
   const push = () => {
     setArray((previousArray) => {
       const item = previousArray[previousArray.length - 1] + 1;
-      previousArray.push(item);
-      return [...previousArray];
+      return [...previousArray, item];
     });
   };
 
