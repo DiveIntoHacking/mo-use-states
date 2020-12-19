@@ -29,7 +29,7 @@ const StateIsArray = () => {
   return (
     <div>
       <button onClick={push}>更新する</button>
-      array: {array}
+      array: {array.toString()}
     </div>
   );
 };
@@ -46,7 +46,7 @@ const StateIsArray2 = () => {
   return (
     <div>
       <button onClick={push}>更新する</button>
-      array: {array}
+      array: {array.toString()}
     </div>
   );
 };
