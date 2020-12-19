@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { classToPlain, plainToClass } from 'class-transformer';
+import { classToClass } from 'class-transformer';
 
 import './App.css';
 
@@ -160,9 +160,9 @@ const StateIsClassInstance4 = ({ id }) => {
   const [counter, setCounter] = useState(_counter);
   const increment = () => {
     setCounter((previousCounter) => {
-      let serializedPreviousCounter = classToPlain(previousCounter);
-      let _previousCounter = plainToClass(Counter, serializedPreviousCounter);
+      const _previousCounter = { ...previousCounter };
       _previousCounter.counter.count = _previousCounter.counter.count + 1;
+      console.log({ _previousCounter });
       return _previousCounter;
     });
   };
@@ -176,7 +176,7 @@ const StateIsClassInstance4 = ({ id }) => {
         <button onClick={increment}>更新する</button>
       </td>
       <td>{counter.counter.count}</td>
-      <td>{updatableAndReRenderable}</td>
+      <td>更新のされ方がトリッキー。最初の1回目だけ+1、以降、+2ずつ増える。</td>
     </tr>
   );
 };
@@ -187,8 +187,7 @@ const StateIsClassInstance5 = ({ id }) => {
   const [counter, setCounter] = useState(_counter);
   const increment = () => {
     setCounter((previousCounter) => {
-      let serializedPreviousCounter = classToPlain(previousCounter);
-      let _previousCounter = plainToClass(Counter, serializedPreviousCounter);
+      let _previousCounter = classToClass(previousCounter);
       _previousCounter.counter.count = _previousCounter.counter.count + 1;
       return _previousCounter;
     });
@@ -197,7 +196,9 @@ const StateIsClassInstance5 = ({ id }) => {
   return (
     <tr>
       <td>{id}</td>
-      <td>クラスのインスタンス(ネスト版)</td>
+      <td>
+        クラスのインスタンス(ネスト版) - class-transformerによるdeep clone
+      </td>
       <td>0</td>
       <td>
         <button onClick={increment}>更新する</button>
