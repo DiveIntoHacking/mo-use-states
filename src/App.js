@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { classToClass } from 'class-transformer';
+import _ from 'lodash';
+import $ from 'jquery';
 
 import './App.css';
 
@@ -209,6 +211,58 @@ const StateIsClassInstance5 = ({ id }) => {
   );
 };
 
+const StateIsClassInstance6 = ({ id }) => {
+  const _counter = new Counter();
+  _counter.counter = new Counter();
+  const [counter, setCounter] = useState(_counter);
+  const increment = () => {
+    setCounter((previousCounter) => {
+      let _previousCounter = _.cloneDeep(previousCounter);
+      _previousCounter.counter.count = _previousCounter.counter.count + 1;
+      return _previousCounter;
+    });
+  };
+
+  return (
+    <tr>
+      <td>{id}</td>
+      <td>クラスのインスタンス(ネスト版) - lodashによるdeep clone</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{counter.counter.count}</td>
+      <td>{updatableAndReRenderable}</td>
+    </tr>
+  );
+};
+
+const StateIsClassInstance7 = ({ id }) => {
+  const _counter = new Counter();
+  _counter.counter = new Counter();
+  const [counter, setCounter] = useState(_counter);
+  const increment = () => {
+    setCounter((previousCounter) => {
+      let _previousCounter = _.cloneDeep(previousCounter);
+      _previousCounter.counter.count = _previousCounter.counter.count + 1;
+      return _previousCounter;
+    });
+  };
+
+  return (
+    <tr>
+      <td>{id}</td>
+      <td>クラスのインスタンス(ネスト版) - lodashによるdeep clone</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{counter.counter.count}</td>
+      <td>{updatableAndReRenderable}</td>
+    </tr>
+  );
+};
+
 const App = () => {
   return (
     <table>
@@ -232,6 +286,8 @@ const App = () => {
         <StateIsClassInstance3 id={6} />
         <StateIsClassInstance4 id={7} />
         <StateIsClassInstance5 id={8} />
+        <StateIsClassInstance6 id={9} />
+        <StateIsClassInstance7 id={10} />
       </tbody>
     </table>
   );
