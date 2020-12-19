@@ -51,12 +51,61 @@ const StateIsArray2 = () => {
   );
 };
 
+class Counter {
+  constructor() {
+    this.count = 0;
+  }
+}
+
+const StateIsClassInstance = () => {
+  const [counter, setCounter] = useState(new Counter());
+  const increment = () => {
+    setCounter((previousCounter) => {
+      previousCounter.count = previousCounter.count + 1;
+      console.log({ count: previousCounter.count });
+      return previousCounter;
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={increment}>更新する</button>
+      count: {counter.count}
+    </div>
+  );
+};
+
+const StateIsClassInstance2 = () => {
+  const [counter, setCounter] = useState(new Counter());
+  const increment = () => {
+    setCounter((previousCounter) => {
+      previousCounter.count = previousCounter.count + 1;
+
+      const _previousCounter = Object.assign(
+        Object.create(Object.getPrototypeOf(previousCounter)),
+        previousCounter
+      );
+
+      return _previousCounter;
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={increment}>更新する</button>
+      count: {counter.count}
+    </div>
+  );
+};
+
 const App = () => {
   return (
     <>
       <StateIsNumber />
       <StateIsArray />
       <StateIsArray2 />
+      <StateIsClassInstance />
+      <StateIsClassInstance2 />
     </>
   );
 };
