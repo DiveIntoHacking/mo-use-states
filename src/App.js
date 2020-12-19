@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function App() {
+function StateIsNumber() {
   const [count, setCount] = useState(0);
   const increment = () => {
     setCount((previousCount) => previousCount + 1);
@@ -12,5 +12,9 @@ function App() {
     </div>
   );
 }
+
+const App = () => {
+  return <StateIsNumber />;
+};
 
 export default App;
