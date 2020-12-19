@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { classToPlain, plainToClass } from 'class-transformer';
 
+import './App.css';
+
 const StateIsNumber = () => {
   const [number, setNumber] = useState(0);
   const increment = () => {
@@ -8,14 +10,19 @@ const StateIsNumber = () => {
   };
 
   return (
-    <div>
-      <button onClick={increment}>更新する</button>
-      number: {number}
-    </div>
+    <tr>
+      <td>1</td>
+      <td>数値</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{number}</td>
+      <td>更新された値がre-renderされる。</td>
+    </tr>
   );
 };
 
-/* 状態は更新されるものの、 re-renderされないので、期待の動きとはならない。 */
 const StateIsArray = () => {
   const [array, setArray] = useState([1, 2, 3]);
   const push = () => {
@@ -28,10 +35,16 @@ const StateIsArray = () => {
   };
 
   return (
-    <div>
-      <button onClick={push}>更新する</button>
-      array: {array.toString()}
-    </div>
+    <tr>
+      <td>2</td>
+      <td>配列 - その1</td>
+      <td>[{[1, 2, 3].toString()}]</td>
+      <td>
+        <button onClick={push}>更新する</button>
+      </td>
+      <td>[{array.toString()}]</td>
+      <td>更新はされるが、更新後の値がre-renderされない。</td>
+    </tr>
   );
 };
 
@@ -45,10 +58,16 @@ const StateIsArray2 = () => {
   };
 
   return (
-    <div>
-      <button onClick={push}>更新する</button>
-      array: {array.toString()}
-    </div>
+    <tr>
+      <td>3</td>
+      <td>配列 - その2</td>
+      <td>[{[1, 2, 3].toString()}]</td>
+      <td>
+        <button onClick={push}>更新する</button>
+      </td>
+      <td>[{array.toString()}]</td>
+      <td>更新された値がre-renderされる。</td>
+    </tr>
   );
 };
 
@@ -135,7 +154,16 @@ const StateIsClassInstance4 = () => {
 
 const App = () => {
   return (
-    <>
+    <table>
+      <caption>useState 比較表</caption>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">ケース</th>
+        <th scope="col">初期値</th>
+        <th scope="col"></th>
+        <th scope="col">更新後の値</th>
+        <th scope="col">結果</th>
+      </tr>
       <StateIsNumber />
       <StateIsArray />
       <StateIsArray2 />
@@ -143,7 +171,7 @@ const App = () => {
       <StateIsClassInstance2 />
       <StateIsClassInstance3 />
       <StateIsClassInstance4 />
-    </>
+    </table>
   );
 };
 
