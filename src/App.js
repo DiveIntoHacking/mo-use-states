@@ -181,25 +181,57 @@ const StateIsClassInstance4 = ({ id }) => {
   );
 };
 
+const StateIsClassInstance5 = ({ id }) => {
+  const _counter = new Counter();
+  _counter.counter = new Counter();
+  const [counter, setCounter] = useState(_counter);
+  const increment = () => {
+    setCounter((previousCounter) => {
+      let serializedPreviousCounter = classToPlain(previousCounter);
+      let _previousCounter = plainToClass(Counter, serializedPreviousCounter);
+      _previousCounter.counter.count = _previousCounter.counter.count + 1;
+      return _previousCounter;
+    });
+  };
+
+  return (
+    <tr>
+      <td>{id}</td>
+      <td>クラスのインスタンス(ネスト版)</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{counter.counter.count}</td>
+      <td>{updatableAndReRenderable}</td>
+    </tr>
+  );
+};
+
 const App = () => {
   return (
     <table>
       <caption>useState 比較表</caption>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">ケース</th>
-        <th scope="col">初期値</th>
-        <th scope="col"></th>
-        <th scope="col">更新後の値</th>
-        <th scope="col">結果</th>
-      </tr>
-      <StateIsNumber id={1} />
-      <StateIsArray id={2} />
-      <StateIsArray2 id={3} />
-      <StateIsClassInstance id={4} />
-      <StateIsClassInstance2 id={5} />
-      <StateIsClassInstance3 id={6} />
-      <StateIsClassInstance4 id={7} />
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">ケース</th>
+          <th scope="col">初期値</th>
+          <th scope="col"></th>
+          <th scope="col">更新後の値</th>
+          <th scope="col">結果</th>
+        </tr>
+      </thead>
+      <tbody>
+        <StateIsNumber id={1} />
+        <StateIsArray id={2} />
+        <StateIsArray2 id={3} />
+        <StateIsClassInstance id={4} />
+        <StateIsClassInstance2 id={5} />
+        <StateIsClassInstance3 id={6} />
+        <StateIsClassInstance4 id={7} />
+        <StateIsClassInstance5 id={8} />
+      </tbody>
     </table>
   );
 };
