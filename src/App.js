@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { classToClass } from 'class-transformer';
 import _ from 'lodash';
 import $ from 'jquery';
@@ -261,7 +261,7 @@ const StateIsClassInstance7 = ({ id }) => {
         <button onClick={increment}>更新する</button>
       </td>
       <td>{counter.counter.count}</td>
-      <td>カウンタの上がり方が変</td>
+      <td>React.StrictModeを削除すれば正常</td>
     </tr>
   );
 };
@@ -288,7 +288,38 @@ const StateIsClassInstance8 = ({ id }) => {
         <button onClick={increment}>更新する</button>
       </td>
       <td>{counter.counter.count}</td>
-      <td>カウンタの上がり方が変</td>
+      <td>React.StrictModeを削除すれば正常</td>
+    </tr>
+  );
+};
+
+/* https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate */
+const StateIsClassInstance9 = ({ id }) => {
+  const [, forceReRender] = useReducer((x) => x + 1, 0);
+
+  const _counter = new Counter();
+  _counter.counter = new Counter();
+  const [counter, setCounter] = useState(_counter);
+  const increment = () => {
+    setCounter((previousCounter) => {
+      previousCounter.counter.count = previousCounter.counter.count + 1;
+      return previousCounter;
+    });
+    forceReRender();
+  };
+
+  console.log({ counter });
+
+  return (
+    <tr>
+      <td>{id}</td>
+      <td>クラスのインスタンス(ネスト版) - jQueryによるdeep clone</td>
+      <td>0</td>
+      <td>
+        <button onClick={increment}>更新する</button>
+      </td>
+      <td>{counter.counter.count}</td>
+      <td>React.StrictModeを削除すれば正常</td>
     </tr>
   );
 };
@@ -319,6 +350,7 @@ const App = () => {
         <StateIsClassInstance6 id={9} />
         <StateIsClassInstance7 id={10} />
         <StateIsClassInstance8 id={11} />
+        <StateIsClassInstance9 id={12} />
       </tbody>
     </table>
   );
