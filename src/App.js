@@ -295,7 +295,7 @@ const StateIsClassInstance8 = ({ id }) => {
 
 /* https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate */
 const StateIsClassInstance9 = ({ id }) => {
-  const [, forceReRender] = useReducer((x) => x + 1, 0);
+  const [, forceRender] = useReducer((x) => x + 1, 0);
 
   const _counter = new Counter();
   _counter.counter = new Counter();
@@ -305,7 +305,7 @@ const StateIsClassInstance9 = ({ id }) => {
       previousCounter.counter.count = previousCounter.counter.count + 1;
       return previousCounter;
     });
-    forceReRender();
+    forceRender();
   };
 
   console.log({ counter });
