@@ -288,7 +288,7 @@ const StateIsClassInstance8 = ({ id }) => {
         <button onClick={increment}>更新する</button>
       </td>
       <td>{counter.counter.count}</td>
-      <td></td>
+      <td>カウンタの上がり方が変</td>
     </tr>
   );
 };
